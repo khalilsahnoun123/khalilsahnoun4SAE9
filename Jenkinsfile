@@ -10,7 +10,7 @@ pipeline{
  		stage('Code fetch') {
  			steps {
  				git branch: 'master',
- 				url: https://github.com/khalilsahnoun123/khalilsahnoun4SAE9.git'
+ 				url: 'https://github.com/khalilsahnoun123/khalilsahnoun4SAE9.git'
  			}
  		}
  		stage('Code Build') {
@@ -59,3 +59,4 @@ post {
  }
 
 }
+
