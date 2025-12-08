@@ -25,7 +25,7 @@ pipeline{
 		}
 		stage('SonarQube Analysis'){
 		    steps{
-				withSonarQubeEnv('sonarqube') {
+				withSonarQubeEnv('soarqube_k8s') {
 		        	sh "mvn sonar:sonar"
 				}
 		    }
@@ -59,4 +59,5 @@ post {
  }
 
 }
+
 
