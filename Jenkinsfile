@@ -23,13 +23,18 @@ pipeline{
 				sh 'mvn package'
 			}
 		}
-		stage('SonarQube Analysis'){
-		    steps{
-				withSonarQubeEnv('soarqube_k8s') {
-		        	sh "mvn sonar:sonar"
-				}
-		    }
-		}
+	stage('SonarQube Analysis'){
+    steps{
+        withSonarQubeEnv('soarqube_k8s') {
+            sh '''
+              mvn sonar:sonar \
+                -Dsonar.projectKey=tn.esprit:student-management \
+                -Dsonar.host.url=$SONAR_HOST_URL \
+                -Dsonar.ws.timeout=300
+            '''
+        }
+    }
+}
 		stage('Docker Build'){
 			steps{
 				script{
@@ -59,5 +64,6 @@ post {
  }
 
 }
+
 
 
