@@ -50,6 +50,36 @@ pipeline{
 				}
 			}
 		}
+		      stage('Kubernetes Deploy') {
+            steps {
+                sh '''
+                  echo "Applying Kubernetes manifests (namespace devops)"
+
+                  kubectl apply -n devops -f k8s/mysql-pv.yaml
+                  kubectl apply -n devops -f k8s/mysql-pvc.yaml
+                  kubectl apply -n devops -f k8s/mysql-deployment.yaml
+                  kubectl apply -n devops -f k8s/mysql-service.yaml
+
+                  kubectl apply -n devops -f k8s/spring-deployment.yaml
+                  kubectl apply -n devops -f k8s/spring-service.yaml
+                '''
+            }
+        }
+		stage('Deploy MySQL & Spring Boot on K8s') {
+    steps {
+        sh '''
+          echo "Updating Spring Boot deployment image and checking pods"
+
+          kubectl -n devops set image deployment/spring-app \
+            spring-app=khalilsahnoun/student-management:1.0.0 --record
+
+          kubectl -n devops rollout status deployment/spring-app --timeout=300s
+
+          kubectl get pods -n devops
+          kubectl get svc -n devops
+        '''
+    }
+}
  	}
 post {
  always {
@@ -64,6 +94,7 @@ post {
  }
 
 }
+
 
 
 
