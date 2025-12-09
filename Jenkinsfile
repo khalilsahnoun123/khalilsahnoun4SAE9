@@ -82,18 +82,25 @@ pipeline{
 }
  	}
 post {
- always {
- echo "======always======"
- }
- success {
- echo "=====pipeline executed successfully ====="
- }
- failure {
- echo "======pipeline execution failed======"
- }
- }
+    always {
+        echo "======always======"
+    }
+    success {
+        echo "=====pipeline executed successfully ====="
+        mail to: 'sahnoun.khalil78@gmail.com',
+             subject: "Pipeline SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Le pipeline s'est terminé avec succès."
+    }
+    failure {
+        echo "======pipeline execution failed======"
+        mail to: 'sahnoun.khalil78@gmail.com',
+             subject: "Pipeline FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Le pipeline a échoué. Voir les logs Jenkins."
+    }
+}
 
 }
+
 
 
 
