@@ -23,13 +23,18 @@ pipeline{
 				sh 'mvn package'
 			}
 		}
-		stage('SonarQube Analysis'){
-		    steps{
-				withSonarQubeEnv('sonarqube') {
-		        	sh "mvn sonar:sonar"
-				}
-		    }
-		}
+	stage('SonarQube Analysis'){
+    steps{
+        withSonarQubeEnv('soarqube_k8s') {
+            sh '''
+              mvn sonar:sonar \
+                -Dsonar.projectKey=tn.esprit:student-management \
+                -Dsonar.host.url=$SONAR_HOST_URL \
+                -Dsonar.ws.timeout=300
+            '''
+        }
+    }
+}
 		stage('Docker Build'){
 			steps{
 				script{
@@ -45,18 +50,58 @@ pipeline{
 				}
 			}
 		}
+		      stage('Kubernetes Deploy') {
+            steps {
+                sh '''
+                  echo "Applying Kubernetes manifests (namespace devops)"
+
+                  kubectl apply -n devops -f k8s/mysql-pv.yaml
+                  kubectl apply -n devops -f k8s/mysql-pvc.yaml
+                  kubectl apply -n devops -f k8s/mysql-deployment.yaml
+                  kubectl apply -n devops -f k8s/mysql-service.yaml
+
+                  kubectl apply -n devops -f k8s/spring-deployment.yaml
+                  kubectl apply -n devops -f k8s/spring-service.yaml
+                '''
+            }
+        }
+		stage('Deploy MySQL & Spring Boot on K8s') {
+    steps {
+        sh '''
+          echo "Updating Spring Boot deployment image and checking pods"
+
+          kubectl -n devops set image deployment/spring-app \
+            spring-app=khalilsahnoun/student-management:1.0.0 --record
+
+          kubectl -n devops rollout status deployment/spring-app --timeout=300s
+
+          kubectl get pods -n devops
+          kubectl get svc -n devops
+        '''
+    }
+}
  	}
 post {
- always {
- echo "======always======"
- }
- success {
- echo "=====pipeline executed successfully ====="
- }
- failure {
- echo "======pipeline execution failed======"
- }
- }
+    always {
+        echo "======always======"
+    }
+    success {
+        echo "=====pipeline executed successfully ====="
+        mail to: 'sahnoun.khalil78@gmail.com',
+             subject: "Pipeline SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Le pipeline s'est terminé avec succès."
+    }
+    failure {
+        echo "======pipeline execution failed======"
+        mail to: 'sahnoun.khalil78@gmail.com',
+             subject: "Pipeline FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+             body: "Le pipeline a échoué. Voir les logs Jenkins."
+    }
+}
 
 }
+
+
+
+
 
