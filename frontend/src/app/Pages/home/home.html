@@ -1,0 +1,69 @@
+<div class="home-wrapper">
+  <!-- Hero / Header -->
+  <section class="hero">
+    <div class="hero-left">
+      <h1>Welcome to <span>StudentManager</span></h1>
+      <p>
+        Manage students, departments and enrollments in one clean and simple interface.
+        Create, update and explore academic data with just a few clicks.
+      </p>
+
+      <div class="hero-actions">
+        <button routerLink="/students" class="primary-btn">
+          Go to Students
+        </button>
+        <button routerLink="/departments" class="ghost-btn">
+          View Departments
+        </button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-label">Students</span>
+          <span class="stat-value">1,240</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Departments</span>
+          <span class="stat-value">12</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Enrollments</span>
+          <span class="stat-value">3,580</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-card">
+        <h3>Quick actions</h3>
+        <ul>
+          <li routerLink="/students">+ Add new student</li>
+          <li routerLink="/enrollments">+ Create enrollment</li>
+          <li routerLink="/departments">Manage departments</li>
+        </ul>
+      </div>
+
+      <div class="hero-card secondary">
+        <h3>Tips</h3>
+        <p>Use the top navigation to switch between Students, Departments and Enrollments views.</p>
+        <p>You can later connect these pages with your Spring Boot API.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 feature cards -->
+  <section class="features">
+    <div class="feature-card">
+      <h3>Student Management</h3>
+      <p>Create, update and delete student records, including personal info and department.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Departments Overview</h3>
+      <p>Organize students by department and keep track of department heads and contacts.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Enrollment Tracking</h3>
+      <p>Link students to courses, assign grades and monitor academic status (ACTIVE, COMPLETED...).</p>
+    </div>
+  </section>
+</div>

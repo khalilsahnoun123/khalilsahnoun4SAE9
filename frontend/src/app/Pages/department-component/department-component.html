@@ -1,0 +1,128 @@
+<div class="page-header">
+  <div>
+    <h2>Departments</h2>
+    <p>Manage departments: create, edit and delete.</p>
+  </div>
+
+  <button class="primary-btn" (click)="openCreateForm()">
+    + New Department
+  </button>
+</div>
+
+<!-- Messages -->
+<div *ngIf="successMessage" class="alert success">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert error">
+  {{ errorMessage }}
+</div>
+
+<!-- Table -->
+<div class="card">
+  <div class="card-header">
+    <span *ngIf="loading">Loading departments...</span>
+    <span *ngIf="!loading">Total: {{ departments.length }}</span>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading && departments.length > 0; else noData">
+    <table class="dept-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Phone</th>
+          <th>Head</th>
+          <th style="width: 160px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of departments">
+          <td>{{ d.idDepartment }}</td>
+          <td>{{ d.name }}</td>
+          <td>{{ d.location }}</td>
+          <td>{{ d.phone }}</td>
+          <td>{{ d.head }}</td>
+          <td class="actions-cell">
+            <button class="btn small" (click)="openEditForm(d)">Edit</button>
+            <button class="btn small danger" (click)="deleteDepartment(d)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noData>
+    <div class="empty-state" *ngIf="!loading">
+      <p>No departments found.</p>
+      <button class="primary-btn" (click)="openCreateForm()">
+        Create first department
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Slide-in form panel -->
+<div class="overlay" *ngIf="isFormOpen" (click)="cancelForm()"></div>
+
+<div class="form-panel" *ngIf="isFormOpen">
+  <div class="form-header">
+    <h3>{{ isEditMode ? 'Edit Department' : 'Create Department' }}</h3>
+    <button class="close-btn" (click)="cancelForm()">✕</button>
+  </div>
+
+  <form (ngSubmit)="submitForm()" #deptForm="ngForm" class="form-body">
+    <div class="form-group">
+      <label>Name <span>*</span></label>
+      <input
+        type="text"
+        name="name"
+       [(ngModel)]="currentDepartment.name"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Location <span>*</span></label>
+      <input
+        type="text"
+        name="location"
+        [(ngModel)]="currentDepartment.location"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input
+        type="text"
+        name="phone"
+        [(ngModel)]="currentDepartment.phone"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Head of Department</label>
+      <input
+        type="text"
+        name="head"
+        [(ngModel)]="currentDepartment.head"
+      />
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn" (click)="cancelForm()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="primary-btn"
+        [disabled]="deptForm.invalid"
+      >
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>
+</div>

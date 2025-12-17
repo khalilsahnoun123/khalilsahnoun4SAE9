@@ -1,0 +1,49 @@
+<nav class="app-navbar">
+  <div class="nav-left">
+    <div class="logo">
+      <span class="logo-icon">🎓</span>
+      <span class="logo-text">Student<span>Manager</span></span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          Home
+        </a>
+      </li>
+      <li>
+        <a routerLink="/students" routerLinkActive="active">
+          Students
+        </a>
+      </li>
+      <li>
+        <a routerLink="/departments" routerLinkActive="active">
+          Departments
+        </a>
+      </li>
+      <li>
+        <a routerLink="/enrollments" routerLinkActive="active">
+          Enrollments
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="nav-right">
+    <div class="search-box">
+      <i class="fa fa-search"></i>
+      <input type="text" placeholder="Search...">
+    </div>
+
+    <div class="user-menu">
+      <div class="avatar">S</div>
+      <div class="user-info">
+        <span class="user-name">Admin User</span>
+        <span class="user-role">Administrator</span>
+      </div>
+      <button class="logout-btn">
+        <i class="fa fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  </div>
+</nav>

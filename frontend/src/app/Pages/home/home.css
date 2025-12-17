@@ -1,0 +1,182 @@
+.home-wrapper {
+  padding: 24px 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Hero section */
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 1.3fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.hero-left h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.hero-left h1 span {
+  color: #f59e0b;
+}
+
+.hero-left p {
+  color: #4b5563;
+  margin-bottom: 16px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.primary-btn,
+.ghost-btn {
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+.ghost-btn {
+  background: white;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+}
+
+.ghost-btn:hover {
+  background: #f9fafb;
+}
+
+/* Stats */
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.stat-card {
+  flex: 0 0 110px;
+  background: white;
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.1);
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Right hero cards */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 6px rgba(15, 23, 42, 0.1);
+}
+
+.hero-card h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.hero-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hero-card ul li {
+  font-size: 14px;
+  padding: 4px 0;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+.hero-card ul li:hover {
+  text-decoration: underline;
+}
+
+.hero-card.secondary {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* Features */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 6px rgba(15, 23, 42, 0.08);
+}
+
+.feature-card h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #4b5563;
+}
+
+/* Background */
+body {
+  background: #f3f4f6;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+}
+.home-wrapper h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}

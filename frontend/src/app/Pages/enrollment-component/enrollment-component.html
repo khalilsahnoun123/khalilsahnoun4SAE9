@@ -1,0 +1,139 @@
+<div class="page-header">
+  <div>
+    <h2>Enrollments</h2>
+    <p>Manage enrollments: create, edit and delete.</p>
+  </div>
+
+  <button class="primary-btn" (click)="openCreateForm()">
+    + New Enrollment
+  </button>
+</div>
+
+<!-- Messages -->
+<div *ngIf="successMessage" class="alert success">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert error">
+  {{ errorMessage }}
+</div>
+
+<!-- Table -->
+<div class="card">
+  <div class="card-header">
+    <span *ngIf="loading">Loading enrollments...</span>
+    <span *ngIf="!loading">Total: {{ enrollments.length }}</span>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading && enrollments.length > 0; else noData">
+    <table class="dept-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Enrollment date</th>
+          <th>Grade</th>
+          <th>Status</th>
+          <th>Student</th>
+          <th style="width: 160px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of enrollments">
+          <td>{{ e.idEnrollment }}</td>
+          <td>{{ e.enrollmentDate }}</td>
+          <td>{{ e.grade }}</td>
+          <td>{{ e.status }}</td>
+          <td>
+            {{ e.student?.firstName }} {{ e.student?.lastName }}
+          </td>
+          <td class="actions-cell">
+            <button class="btn small" (click)="openEditForm(e)">Edit</button>
+            <button class="btn small danger" (click)="deleteEnrollment(e)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noData>
+    <div class="empty-state" *ngIf="!loading">
+      <p>No enrollments found.</p>
+      <button class="primary-btn" (click)="openCreateForm()">
+        Create first enrollment
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Slide-in form panel -->
+<div class="overlay" *ngIf="isFormOpen" (click)="cancelForm()"></div>
+
+<div class="form-panel" *ngIf="isFormOpen">
+  <div class="form-header">
+    <h3>{{ isEditMode ? 'Edit Enrollment' : 'Create Enrollment' }}</h3>
+    <button class="close-btn" (click)="cancelForm()">✕</button>
+  </div>
+
+  <form (ngSubmit)="submitForm()" #enrollmentForm="ngForm" class="form-body">
+    <div class="form-group">
+      <label>Enrollment date <span>*</span></label>
+      <input
+        type="date"
+        name="enrollmentDate"
+        [(ngModel)]="currentEnrollment.enrollmentDate"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Grade</label>
+      <input
+        type="number"
+        name="grade"
+        [(ngModel)]="currentEnrollment.grade"
+        step="0.01"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Status</label>
+      <select
+        name="status"
+        [(ngModel)]="currentEnrollment.status"
+      >
+        <option *ngFor="let s of statusOptions" [ngValue]="s">
+          {{ s }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Student <span>*</span></label>
+      <select
+        name="student"
+        [(ngModel)]="currentEnrollment.student"
+        [ngModelOptions]="{ standalone: true }"
+        required
+      >
+        <option [ngValue]="undefined">-- Select student --</option>
+        <option *ngFor="let st of students" [ngValue]="st">
+          {{ st.firstName }} {{ st.lastName }} ({{ st.email }})
+        </option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn" (click)="cancelForm()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="primary-btn"
+        [disabled]="enrollmentForm.invalid || !currentEnrollment.student"
+      >
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>
+</div>

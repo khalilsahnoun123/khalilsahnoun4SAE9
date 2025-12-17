@@ -1,0 +1,167 @@
+<div class="page-header">
+  <div>
+    <h2>Students</h2>
+    <p>Manage students: create, edit and delete.</p>
+  </div>
+
+  <button class="primary-btn" (click)="openCreateForm()">
+    + New Student
+  </button>
+</div>
+
+<!-- Messages -->
+<div *ngIf="successMessage" class="alert success">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert error">
+  {{ errorMessage }}
+</div>
+
+<!-- Table -->
+<div class="card">
+  <div class="card-header">
+    <span *ngIf="loading">Loading students...</span>
+    <span *ngIf="!loading">Total: {{ students.length }}</span>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading && students.length > 0; else noData">
+    <table class="dept-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Date of birth</th>
+          <th>Address</th>
+          <th>Department</th>
+          <th style="width: 160px;">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of students">
+          <td>{{ s.idStudent }}</td>
+          <td>{{ s.firstName }}</td>
+          <td>{{ s.lastName }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.phone }}</td>
+          <td>{{ s.dateOfBirth }}</td>
+          <td>{{ s.address }}</td>
+          <td>{{ s.department?.name }}</td>
+          <td class="actions-cell">
+            <button class="btn small" (click)="openEditForm(s)">Edit</button>
+            <button class="btn small danger" (click)="deleteStudent(s)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #noData>
+    <div class="empty-state" *ngIf="!loading">
+      <p>No students found.</p>
+      <button class="primary-btn" (click)="openCreateForm()">
+        Create first student
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Slide-in form panel -->
+<div class="overlay" *ngIf="isFormOpen" (click)="cancelForm()"></div>
+
+<div class="form-panel" *ngIf="isFormOpen">
+  <div class="form-header">
+    <h3>{{ isEditMode ? 'Edit Student' : 'Create Student' }}</h3>
+    <button class="close-btn" (click)="cancelForm()">✕</button>
+  </div>
+
+  <form (ngSubmit)="submitForm()" #studentForm="ngForm" class="form-body">
+    <div class="form-group">
+      <label>First name <span>*</span></label>
+      <input
+        type="text"
+        name="firstName"
+        [(ngModel)]="currentStudent.firstName"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Last name <span>*</span></label>
+      <input
+        type="text"
+        name="lastName"
+        [(ngModel)]="currentStudent.lastName"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Email <span>*</span></label>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="currentStudent.email"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input
+        type="text"
+        name="phone"
+        [(ngModel)]="currentStudent.phone"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Date of birth</label>
+      <input
+        type="date"
+        name="dateOfBirth"
+        [(ngModel)]="currentStudent.dateOfBirth"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Address</label>
+      <input
+        type="text"
+        name="address"
+        [(ngModel)]="currentStudent.address"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Department</label>
+      <select
+        name="department"
+        [(ngModel)]="currentStudent.department"
+        [ngModelOptions]="{ standalone: true }"
+      >
+        <option [ngValue]="undefined">-- Select department --</option>
+        <option *ngFor="let d of departments" [ngValue]="d">
+          {{ d.name }} ({{ d.location }})
+        </option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn" (click)="cancelForm()">
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="primary-btn"
+        [disabled]="studentForm.invalid"
+      >
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+    </div>
+  </form>
+</div>
