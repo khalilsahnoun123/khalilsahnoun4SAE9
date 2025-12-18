@@ -11,3 +11,25 @@ Status:
 
 * Exiting due to TUNNEL_ALREADY_RUNNING: Another tunnel process is already running, terminate the existing instance to start a new one
 
+! Executing "docker container inspect minikube --format={{.State.Status}}" took an unusually long time: 3.295242882s
+* Restarting the docker service may improve performance.
+Status:	
+	machine: minikube
+	pid: 45180
+	route: 10.96.0.0/12 -> 192.168.49.2
+	minikube: Running
+	services: []
+    errors: 
+		minikube: no errors
+		router: no errors
+		loadbalancer emulator: Get "https://192.168.49.2:8443/api/v1/services": net/http: TLS handshake timeout
+Status:	
+	machine: minikube
+	pid: 45180
+	route: 10.96.0.0/12 -> 192.168.49.2
+	minikube: Running
+	services: []
+    errors: 
+		minikube: no errors
+		router: no errors
+		loadbalancer emulator: no errors
