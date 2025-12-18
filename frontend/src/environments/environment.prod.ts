@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://<minikube-ip>:30090/student' // or your backend service/ingress URL
+  apiUrl: 'http://192.168.49.2:30080/student' // or your backend service/ingress URL
 };
