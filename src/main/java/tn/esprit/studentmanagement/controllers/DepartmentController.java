@@ -11,8 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Depatment")
-@CrossOrigin(origins = "http://localhost:4200")
-@AllArgsConstructor
+@CrossOrigin(origins = {
+        "http://localhost:4200",
+        "http://192.168.33.10:8081"
+})@AllArgsConstructor
 public class DepartmentController {
     private IDepartmentService departmentService;
 
