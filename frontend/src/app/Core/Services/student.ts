@@ -2,13 +2,14 @@ import {  Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Student } from '../Models/student';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class studentService {
   constructor(
     private http: HttpClient
   ){}
-  private baseUrl = 'http://localhost:8089/student/students';
+  private baseUrl = environment.apiUrl +'/students';
 
   getAllStudents(): Observable<Student[]> {
     return this.http.get<Student[]>(`${this.baseUrl}/getAllStudents`);

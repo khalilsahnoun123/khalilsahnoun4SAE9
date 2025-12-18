@@ -2,6 +2,7 @@ import {  Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Enrollment } from '../Models/enrollment';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class EnrollmentService {
@@ -9,7 +10,7 @@ export class EnrollmentService {
   constructor(
     private http: HttpClient
   ){}
-  private baseUrl = 'http://localhost:8089/student/Enrollment';
+  private baseUrl = environment.apiUrl +'/Enrollment';
 
   getAllEnrollments(): Observable<Enrollment[]> {
     return this.http.get<Enrollment[]>(`${this.baseUrl}/getAllEnrollment`);
