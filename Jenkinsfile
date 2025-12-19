@@ -6,7 +6,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS = credentials('docker_cred')
         IMAGE_NAME = 'khalilsahnoun/student-management'
-        IMAGE_TAG  = '1.0.2'   // <<< INCRÉMENTE ICI (1.0.2, 1.0.3, ...)
+        IMAGE_TAG  = '1.0.3'   // <<< INCRÉMENTE ICI (1.0.2, 1.0.3, ...)
     }
 
     stages {
@@ -100,4 +100,5 @@ pipeline {
         }
     }
 }
+
 
